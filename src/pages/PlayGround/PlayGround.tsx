@@ -226,7 +226,7 @@ function PlaygroundPage() {
     );
 
     return (
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', paddingTop: '70px' }}>
             <div
                 id="navbar"
                 style={{
@@ -263,7 +263,6 @@ function PlaygroundPage() {
                                     height: '40px',
                                     border: '1px solid #444',
                                     position: 'relative',
-                                    zIndex: 1000,
                                 }}
                             >
                                 <option value="monokai">Monokai</option>
