@@ -67,7 +67,7 @@ const HorizontalScrollReviews = () => {
     }, []);
 
     return (
-        <div ref={containerRef} className="w-full h-[40vh] overflow-hidden">
+        <div ref={containerRef} className="w-full overflow-hidden">
             <h1 className="text-3xl font-bold text-center text-white mb-8 pt-10">
                 What Our Students Say
             </h1>

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
     return (
         <footer className="w-full py-10 border-t border-white/10 bg-black/30 backdrop-blur-xl">
@@ -7,9 +9,9 @@ const Footer = () => {
                 </p>
 
                 <div className="flex gap-6 mt-4 sm:mt-0 text-white/70">
-                    <a href="#">Privacy</a>
-                    <a href="#">Terms</a>
-                    <a href="#">Contact</a>
+                    <Link to="#">Privacy</Link>
+                    <Link to="#">Terms</Link>
+                    <Link to="#">Contact</Link>
                 </div>
             </div>
         </footer>

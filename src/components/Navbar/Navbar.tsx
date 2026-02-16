@@ -6,7 +6,7 @@ import {
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@radix-ui/react-dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import {
     LogInIcon,
@@ -99,11 +99,8 @@ export default function Navbar() {
                         style={{ height: '100%', width: '100px' }}
                     >
                         {!isInvalid(token) ? (
-                            <DropdownMenu open={open}>
-                                <DropdownMenuTrigger
-                                    asChild
-                                    onClick={() => setOpen(!open)}
-                                >
+                            <DropdownMenu open={open} onOpenChange={setOpen}>
+                                <DropdownMenuTrigger asChild>
                                     <Avatar className="cursor-pointer">
                                         <AvatarImage
                                             src="https://github.com/shadcn.png"
@@ -163,19 +160,15 @@ export default function Navbar() {
                             </DropdownMenu>
                         ) : (
                             <div className="flex items-center  h-full text-gray-300">
-                                <Link to={'/login'} className="mt-3">
-                                    <Tooltip
-                                        children={
-                                            <Link
-                                                to={'/login'}
-                                                onClick={() => setActive('')}
-                                            >
-                                                <LogInIcon />
-                                            </Link>
-                                        }
-                                        content="Login"
-                                    />
-                                </Link>
+                                <Tooltip content="Login">
+                                    <Link
+                                        to="/login"
+                                        className="mt-3"
+                                        onClick={() => setActive('')}
+                                    >
+                                        <LogInIcon />
+                                    </Link>
+                                </Tooltip>
                             </div>
                         )}
                     </div>
@@ -201,7 +194,7 @@ export const MenuItem = ({
     return (
         <>
             <DropdownMenuItem
-                className="p-2 hover:bg-gray-600 cursor-pointer focus:outline-none focus:ring-0 bg-black text-black m-0"
+                className="p-2 hover:bg-gray-600 cursor-pointer focus:outline-none focus:ring-0 bg-background text-black m-0"
                 onClick={() => {
                     setOpen((prev: boolean) => !prev);
                     onClick();

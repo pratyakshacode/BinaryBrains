@@ -6,7 +6,6 @@ import gsap from 'gsap';
 import { CoursesDescription } from '@/utils/utils';
 import OfferingCard from '@/components/Home/OfferingCard';
 import HorizontalScrollReviews from '@/components/Home/HorizontalScrollReviews';
-import SmoothScroll from '@/components/SmoothScroll/SmoothScroll';
 import WhyChooseUs from '@/components/Home/WhyChooseUs';
 import HowItWorks from '@/components/Home/HowItWorks';
 import FAQ from '@/components/Home/FAQ';
@@ -64,8 +63,6 @@ const LandingPage = () => {
 
     return (
         <>
-            <SmoothScroll />
-
             {/* HERO SECTION */}
 
             <div

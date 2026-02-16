@@ -5,7 +5,6 @@
 
 html,
 body {
-    scroll-behavior: auto; /* required */
     overscroll-behavior: none;
     -ms-overflow-style: none;
     color: white;
