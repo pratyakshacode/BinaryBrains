@@ -63,7 +63,6 @@ const OfferingCard = ({
                 direction === 'right' ? 'sm:flex-row' : 'sm:flex-row-reverse'
             } items-center w-full gap-5 mt-10`}
         >
-            {/* FIXED: className instead of broken id */}
             <div className="offering-icon w-full flex justify-center">
                 <img src={iconSrc} className="h-[20vh] sm:h-[20vh]" />
             </div>
