@@ -24,61 +24,65 @@ function App() {
             <Router>
                 <Toaster />
                 <Navbar />
-                <Routes>
-                    {/* --------------------------- public routes -----------------------------------  */}
+                <div className="pt-16">
+                    <Routes>
+                        {/* --------------------------- public routes -----------------------------------  */}
 
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/playground" element={<PlayGround />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="/" element={<LandingPage />} />
+                        <Route path="/playground" element={<PlayGround />} />
 
-                    {/* --------------------------- admin routes -----------------------------------  */}
+                        {/* --------------------------- admin routes -----------------------------------  */}
 
-                    <Route element={<AdminRoute />}>
-                        <Route path="/admin" element={<Admin />} />
-                    </Route>
+                        <Route element={<AdminRoute />}>
+                            <Route path="/admin" element={<Admin />} />
+                        </Route>
 
-                    {/* --------------------------- private routes ------------------------------------ */}
+                        {/* --------------------------- private routes ------------------------------------ */}
 
-                    <Route element={<PrivateRoute />}>
-                        {Object.keys(USER_ALLOWED_ROUTES).map(
-                            (page, index: number) => {
-                                if (isInvalid(KEY_TO_PAGE_MAP[page]))
-                                    return (
-                                        <Route
-                                            key={index}
-                                            element={
-                                                <Suspense
-                                                    fallback={<Spinner />}
-                                                >
-                                                    <NotFoundPage />
-                                                </Suspense>
-                                            }
-                                            path={`/not-found`}
-                                        />
-                                    );
-                                else
-                                    return (
-                                        <Route
-                                            key={index}
-                                            element={
-                                                <Suspense
-                                                    fallback={<Spinner />}
-                                                >
-                                                    {React.createElement(
-                                                        KEY_TO_PAGE_MAP[page]
-                                                    )}
-                                                </Suspense>
-                                            }
-                                            path={`${USER_ALLOWED_ROUTES[page].route}`}
-                                        />
-                                    );
-                            }
-                        )}
-                    </Route>
+                        <Route element={<PrivateRoute />}>
+                            {Object.keys(USER_ALLOWED_ROUTES).map(
+                                (page, index: number) => {
+                                    if (isInvalid(KEY_TO_PAGE_MAP[page]))
+                                        return (
+                                            <Route
+                                                key={index}
+                                                element={
+                                                    <Suspense
+                                                        fallback={<Spinner />}
+                                                    >
+                                                        <NotFoundPage />
+                                                    </Suspense>
+                                                }
+                                                path={`/not-found`}
+                                            />
+                                        );
+                                    else
+                                        return (
+                                            <Route
+                                                key={index}
+                                                element={
+                                                    <Suspense
+                                                        fallback={<Spinner />}
+                                                    >
+                                                        {React.createElement(
+                                                            KEY_TO_PAGE_MAP[
+                                                                page
+                                                            ]
+                                                        )}
+                                                    </Suspense>
+                                                }
+                                                path={`${USER_ALLOWED_ROUTES[page].route}`}
+                                            />
+                                        );
+                                }
+                            )}
+                        </Route>
 
-                    <Route path="/*" element={<NotFoundPage />} />
-                </Routes>
+                        <Route path="/*" element={<NotFoundPage />} />
+                    </Routes>
+                </div>
                 <Footer />
             </Router>
         </>

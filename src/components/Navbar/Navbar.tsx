@@ -21,7 +21,7 @@ import { showToast } from '@/utils/toast';
 import { isInvalid } from '@/utils/utils';
 import { LOGOUT_ROUTE } from '@/utils/Urlpaths';
 import axios from 'axios';
-import Tooltip from '../CustomTooltip';
+import Tooltip from '../Tooltip';
 
 export default function Navbar() {
     const location = useLocation();

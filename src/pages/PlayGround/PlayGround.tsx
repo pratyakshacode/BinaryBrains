@@ -3,7 +3,7 @@ import { Layout, Model, TabNode } from 'flexlayout-react';
 import 'flexlayout-react/style/dark.css';
 
 import CodeEditor from '@/components/CodeEditor/CodeEditor';
-import CustomTooltip from '@/components/CustomTooltip';
+import CustomTooltip from '@/components/Tooltip';
 
 // Themes
 import { monokai } from '@uiw/codemirror-theme-monokai';
@@ -15,6 +15,7 @@ import prettier from 'prettier/standalone';
 import parserHtml from 'prettier/parser-html.js';
 import parserBabel from 'prettier/parser-babel.js';
 import parserCss from 'prettier/parser-postcss.js';
+import { Button } from '@/components/ui/button';
 
 type EditorThemes =
     | 'monokai'
@@ -277,21 +278,7 @@ function PlaygroundPage() {
                     </CustomTooltip>
                 </div>
                 <CustomTooltip content="Format Active tab" placement="bottom">
-                    <button
-                        onClick={formatActiveTab}
-                        style={{
-                            padding: '6px 14px',
-                            background: '#007acc',
-                            color: 'white',
-                            borderRadius: '5px',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            fontWeight: 500,
-                        }}
-                    >
-                        Format Tab
-                    </button>
+                    <Button onClick={formatActiveTab}>Format Tab</Button>
                 </CustomTooltip>
 
                 <CustomTooltip
