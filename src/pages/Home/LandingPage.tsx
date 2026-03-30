@@ -9,6 +9,7 @@ import HorizontalScrollReviews from '@/components/Home/HorizontalScrollReviews';
 import WhyChooseUs from '@/components/Home/WhyChooseUs';
 import HowItWorks from '@/components/Home/HowItWorks';
 import FAQ from '@/components/Home/FAQ';
+import Footer from '@/components/Footer/Footer';
 
 const LandingPage = () => {
     useGSAP(() => {
@@ -153,6 +154,7 @@ const LandingPage = () => {
             <HorizontalScrollReviews />
             <WhyChooseUs />
             <FAQ />
+            <Footer />
         </>
     );
 };

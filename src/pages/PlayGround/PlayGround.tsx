@@ -227,7 +227,7 @@ function PlaygroundPage() {
     );
 
     return (
-        <div style={{ position: 'relative', paddingTop: '70px' }}>
+        <div style={{ position: 'relative' }}>
             <div
                 id="navbar"
                 style={{
@@ -243,10 +243,7 @@ function PlaygroundPage() {
                 }}
             >
                 <div style={{ display: 'flex', gap: '12px' }}>
-                    <CustomTooltip
-                        content="Change Editor Theme"
-                        placement="bottom"
-                    >
+                    <CustomTooltip content="Change Editor Theme">
                         <div style={{ position: 'relative', zIndex: 1000 }}>
                             <select
                                 value={selectedTheme}
@@ -277,14 +274,11 @@ function PlaygroundPage() {
                         </div>
                     </CustomTooltip>
                 </div>
-                <CustomTooltip content="Format Active tab" placement="bottom">
+                <CustomTooltip content="Format Active tab">
                     <Button onClick={formatActiveTab}>Format Tab</Button>
                 </CustomTooltip>
 
-                <CustomTooltip
-                    content="Reset layout to default"
-                    placement="bottom"
-                >
+                <CustomTooltip content="Reset layout to default">
                     <button
                         onClick={resetLayout}
                         style={{

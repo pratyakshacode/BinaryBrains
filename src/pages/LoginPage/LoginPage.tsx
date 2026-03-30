@@ -125,30 +125,30 @@ const LoginPage = () => {
     if (isLoggedIn) return <Navigate to="/" />;
 
     return (
-        <div className="py-20 flex items-center justify-center">
-            <div className="bg-black-1000 rounded-2xl p-10 border border-gray-500 max-w-md w-full text-center">
+        <div className="h-[85vh] bg-gradient-to-r from-[#001f1f] via-[#013a3a] to-black flex items-center justify-center px-4">
+            {/* Glass Card */}
+            <div className="w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-10 shadow-2xl">
                 {/* Heading */}
-                <h1 className="text-2xl font-semibold mb-1">Welcome to</h1>
-                <h2 className="text-red-600 text-4xl font-bold mb-6">
-                    Binary <span className="text-white">Brains</span>
-                </h2>
-
-                <div className="text-gray-500 mb-6">
-                    — or sign in with email —
+                <div className="text-center mb-8">
+                    <h1 className="text-3xl font-semibold text-white">
+                        Welcome Back
+                    </h1>
+                    <p className="text-gray-400 mt-2 text-sm">
+                        Login to continue your journey
+                    </p>
                 </div>
 
-                {/* Login Form */}
-                <form className="space-y-4 text-left">
+                {/* Form */}
+                <div className="space-y-5">
                     {/* Email */}
                     <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                         <Input
                             type="email"
                             value={email}
-                            color="black"
                             onChange={e => setEmail(e.target.value)}
-                            placeholder="binarybrains@gmail.com"
-                            className="pl-10 pr-4 py-2 w-full text-black border rounded-lg"
+                            placeholder="Enter your email"
+                            className="pl-10 bg-white/10 border border-white/20 text-white placeholder:text-gray-400 focus:ring-0 focus:border-teal-400"
                         />
                     </div>
 
@@ -158,10 +158,9 @@ const LoginPage = () => {
                         <Input
                             type={showPassword ? 'text' : 'password'}
                             value={password}
-                            color="black"
                             onChange={e => setPassword(e.target.value)}
-                            placeholder="Password"
-                            className="pl-10 pr-10 py-2 w-full text-black border rounded-lg"
+                            placeholder="Enter your password"
+                            className="pl-10 pr-10 bg-white/10 border border-white/20 text-white placeholder:text-gray-400 focus:ring-0 focus:border-teal-400"
                         />
                         <button
                             type="button"
@@ -173,23 +172,26 @@ const LoginPage = () => {
                     </div>
 
                     {/* Login Button */}
-                    <div className="flex justify-center mb-6">
-                        <button
-                            type="button"
-                            onClick={loginWithMail}
-                            disabled={isLoading}
-                            className={`w-40 text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg px-5 py-2.5 text-sm ${
-                                isLoading ? 'opacity-50 cursor-not-allowed' : ''
-                            }`}
-                        >
-                            {isLoading ? 'Logging In...' : 'Login'}
-                        </button>
+                    <button
+                        type="button"
+                        onClick={loginWithMail}
+                        disabled={isLoading}
+                        className={`w-full bg-teal-500 hover:bg-teal-400 text-black font-semibold rounded-xl py-2.5 transition ${
+                            isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                    >
+                        {isLoading ? 'Logging In...' : 'Login'}
+                    </button>
+
+                    {/* Divider */}
+                    <div className="text-center text-gray-500 text-sm pt-2">
+                        or continue with
                     </div>
 
-                    {/* Google Login */}
-                    <div className="flex justify-center mb-6 py-3">
+                    {/* Google */}
+                    <div className="flex justify-center">
                         <GoogleLogin
-                            width={250}
+                            width={280}
                             theme="filled_black"
                             useOneTap
                             onSuccess={googleResponse}
@@ -203,26 +205,26 @@ const LoginPage = () => {
                         />
                     </div>
 
-                    {/* Footer Links */}
-                    <div className="text-center">
+                    {/* Footer */}
+                    <div className="text-center text-sm text-gray-400 pt-4">
                         <button
-                            type="button"
                             onClick={() => navigate('/forgot-password')}
-                            className="hover:text-red-500 mb-4"
+                            className="hover:text-teal-400 transition"
                         >
                             Forgot Password?
                         </button>
 
-                        <div className="mt-2">
+                        <div className="mt-3">
                             Don't have an account?{' '}
-                            <span onClick={() => navigate('/signup')}>
-                                <span className="text-red-500 text-lg cursor-pointer">
-                                    Sign Up
-                                </span>
+                            <span
+                                onClick={() => navigate('/signup')}
+                                className="text-teal-400 font-medium cursor-pointer hover:text-teal-300"
+                            >
+                                Sign Up
                             </span>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );
