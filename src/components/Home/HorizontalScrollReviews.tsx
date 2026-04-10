@@ -68,7 +68,8 @@ const HorizontalScrollReviews = () => {
 
     return (
         <div ref={containerRef} className="w-full overflow-hidden">
-            <h1 className="text-3xl font-bold text-center text-white mb-8 pt-10">
+            {/* Swapped text-white for text-foreground */}
+            <h1 className="text-3xl font-bold text-center text-foreground mb-8 pt-10 transition-colors">
                 What Our Students Say
             </h1>
 
@@ -77,24 +78,30 @@ const HorizontalScrollReviews = () => {
                 {reviews.map((review, index) => (
                     <div
                         key={index}
+                        // Swapped bg-white/10 and border-white/20 for your theme variables
                         className="w-[300px] h-auto px-5 py-6 rounded-2xl 
-                       backdrop-blur-xl bg-white/10 border border-white/20 
-                       shadow-[0_8px_32px_rgba(0,0,0,0.25)] flex-shrink-0"
+                       backdrop-blur-xl bg-card/60 border border-border 
+                       shadow-xl flex-shrink-0 transition-colors duration-300"
                     >
                         {/* Stars */}
                         <div className="flex gap-1 mb-3">
                             {[...Array(review.stars)].map((_, i) => (
-                                <StarIcon key={i} className="text-yellow-400" />
+                                // Added fill-yellow-400 so the stars are solidly colored in!
+                                <StarIcon
+                                    key={i}
+                                    size={18}
+                                    className="text-yellow-400 fill-yellow-400"
+                                />
                             ))}
                         </div>
 
-                        {/* Message */}
-                        <p className="text-white/90 text-sm leading-relaxed mb-3">
+                        {/* Message: Swapped text-white/90 for text-muted-foreground */}
+                        <p className="text-muted-foreground text-sm leading-relaxed mb-3 transition-colors">
                             "{review.message}"
                         </p>
 
-                        {/* Name */}
-                        <p className="text-white font-semibold text-right">
+                        {/* Name: Swapped text-white for text-foreground */}
+                        <p className="text-foreground font-semibold text-right transition-colors">
                             — {review.name}
                         </p>
                     </div>

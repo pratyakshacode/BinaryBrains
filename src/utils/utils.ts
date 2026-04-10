@@ -24,7 +24,9 @@ export const CoursesDescription = [
             'Practice DSA through real interview-level and competitive programming problems',
         ],
         icon: Algorithms,
-        background: 'linear-gradient(90deg, #0f172a, #312e81)',
+        lightBackground: 'linear-gradient(90deg, #f8fafc, #e0e7ff)', // Soft slate to indigo
+        darkBackground: 'linear-gradient(90deg, #0f172a, #312e81)',
+        invert: false,
     },
     {
         title: 'React JS',
@@ -35,7 +37,9 @@ export const CoursesDescription = [
             'Master best practices used by top developers',
         ],
         icon: ReactIcon,
-        background: 'linear-gradient(270deg, black, #047aaa)',
+        lightBackground: 'linear-gradient(270deg, #f8fafc, #cffafe)', // Soft slate to cyan
+        darkBackground: 'linear-gradient(270deg, black, #047aaa)',
+        invert: false,
     },
     {
         title: 'Node JS',
@@ -46,7 +50,9 @@ export const CoursesDescription = [
             'Master production-ready backend best practices',
         ],
         icon: NodeIcon,
-        background: 'linear-gradient(90deg, black, #3b9302)',
+        lightBackground: 'linear-gradient(90deg, #f8fafc, #dcfce7)', // Soft slate to green
+        darkBackground: 'linear-gradient(90deg, black, #3b9302)',
+        invert: false,
     },
     {
         title: 'Databases (MongoDB + SQL)',
@@ -57,6 +63,8 @@ export const CoursesDescription = [
             'Work with queries, schemas, indexing, and real-world databases',
         ],
         icon: Stack,
-        background: 'linear-gradient(270deg, black, #b3105c)',
+        lightBackground: 'linear-gradient(270deg, #f8fafc, #fce7f3)', // Soft slate to pink
+        darkBackground: 'linear-gradient(270deg, black, #b3105c)',
+        invert: true,
     },
 ];

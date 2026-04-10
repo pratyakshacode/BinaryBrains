@@ -62,10 +62,10 @@
      DARK MODE — FINPAY DARK (Teal + Slate)
   ------------------------------------------- */
     .dark {
-        --background: 222 47% 11%; /* slate-900 */
+        --background: 222 90% 1%; /* slate-900 */
         --foreground: 0 0% 100%;
 
-        --card: 222 47% 14%;
+        --card: 222 90% 5%;
         --card-foreground: 0 0% 100%;
 
         --popover: 222 47% 14%;
@@ -112,6 +112,53 @@
         @apply border-border;
     }
     body {
-        @apply bg-black text-foreground antialiased;
+        /* @apply bg-black text-foreground antialiased; */
+        @apply bg-background text-foreground antialiased transition-colors duration-300;
     }
+}
+
+/* ------------------------------------------
+   FLEXLAYOUT REACT THEME OVERRIDES
+   (Must be outside of any @layer blocks)
+------------------------------------------- */
+
+html .flexlayout__layout {
+    --color-background: hsl(var(--background));
+    --color-text: hsl(var(--foreground));
+    --color-1: hsl(var(--background));
+    --color-2: hsl(var(--border));
+    --color-3: hsl(var(--background));
+    --color-drag1: rgba(0, 0, 0, 0.1);
+    --color-drag2: rgba(0, 0, 0, 0.05);
+
+    --color-tabset-background: hsl(var(--background));
+    --color-tabset-header-background: hsl(var(--secondary));
+    --color-tab-background: transparent;
+    --color-tab-background-selected: hsl(var(--background));
+    --color-tab-text: hsl(var(--muted-foreground));
+    --color-tab-text-selected: hsl(var(--primary));
+    --color-border-divider: hsl(var(--border));
+}
+
+html.dark .flexlayout__layout {
+    --color-drag1: rgba(255, 255, 255, 0.1);
+    --color-drag2: rgba(255, 255, 255, 0.05);
+}
+
+/* Force the active tab colors to obey your theme */
+.flexlayout__tab_button--selected {
+    background-color: hsl(var(--card)) !important;
+    color: hsl(var(--primary)) !important;
+    border-bottom: 2px solid hsl(var(--primary)) !important;
+    box-shadow: none !important;
+}
+
+/* Force unselected tabs to use your muted text color */
+.flexlayout__tab_button--unselected {
+    color: hsl(var(--muted-foreground)) !important;
+}
+
+/* Fixes the background of the actual tab content area */
+.flexlayout__tab {
+    background-color: hsl(var(--background)) !important;
 }

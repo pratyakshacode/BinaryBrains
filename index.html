@@ -5,6 +5,26 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Binary Brains</title>
+    <script>
+      (function () {
+        try {
+          var storedTheme = localStorage.getItem('vite-ui-theme');
+          var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          
+          if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      /* Prevents Vite's CSS-loading flash by setting colors instantly */
+      html { background-color: hsl(0, 0%, 100%); color: hsl(222, 90%, 1%); }
+      html.dark { background-color: hsl(222, 90%, 1%); color: hsl(0, 0%, 100%); }
+      body { margin: 0; }
+    </style>
   </head>
   <body>
     <div id="root"></div>
