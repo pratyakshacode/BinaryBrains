@@ -1,33 +1,54 @@
-import { Link } from 'react-router-dom'
-import { AdminPagesType, adminPages } from './adminUtils'
+import { Link } from 'react-router-dom';
+import { AdminPagesType, adminPages } from './adminUtils';
 
 const AdminPages = () => {
-  return (
-    <div className='md:p-10 flex justify-center'>
-        <div className='flex flex-wrap p-4 w-5/6 justify-center'>
-            {
-                adminPages.map((pageDetail: AdminPagesType) => {
-                    return <PageCard {...pageDetail} />
-                })
-            }
-        </div>
-    </div>
-  )
-}
-
-export const PageCard = ({ icon: Icon, identifier, title, url  }: AdminPagesType) => {
     return (
-        <Link to={url} className='flex border border-gray-500 m-4 justify-center flex-col rounded-2xl p-2' key={identifier} style={{ height: 170, width: 170}}>
-            <div className="page-card-icon flex justify-center items-center h-4/6">
-                <Icon size={60}/>
+        <div className="md:p-10 flex justify-center w-full">
+            <div className="flex flex-wrap p-4 w-5/6 justify-center gap-4">
+                {adminPages.map((pageDetail: AdminPagesType) => {
+                    // Always move the 'key' to the outermost element in a map!
+                    return (
+                        <PageCard key={pageDetail.identifier} {...pageDetail} />
+                    );
+                })}
             </div>
-            <div 
-                className="page-card-title text-center h-1/6 flex items-center justify-center rounded-md"
-                style={{ background: "linear-gradient(to right,black, rgba(251, 46, 152, 0.3), rgba(26, 148, 255, 0.3), black)"}}
+        </div>
+    );
+};
+
+export const PageCard = ({
+    icon: Icon,
+    identifier, // You can omit this from destructuring if you only use it for the key, which is now handled in the map above
+    title,
+    url,
+}: AdminPagesType) => {
+    return (
+        <Link
+            to={url}
+            // Added 'group' for synchronized hover effects.
+            // Swapped hardcoded borders for border-border and bg-card/60
+            className="group flex flex-col border border-border bg-card/60 backdrop-blur-xl m-2 justify-between rounded-2xl p-3 transition-all duration-300 hover:bg-card/80 hover:border-primary/50 hover:shadow-lg hover:-translate-y-1"
+            style={{ height: 170, width: 170 }}
+        >
+            <div className="page-card-icon flex justify-center items-center h-[70%]">
+                {/* The icon starts as muted gray, but turns to your brand primary color when hovered! */}
+                <Icon
+                    size={60}
+                    className="text-muted-foreground transition-colors duration-300 group-hover:text-primary"
+                />
+            </div>
+
+            <div
+                // Removed the hardcoded black gradient.
+                // Replaced with a dynamic primary-tinted background that adapts to dark/light mode
+                className="page-card-title text-center py-2 flex items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/20 transition-colors"
             >
-                <span className='text-xl'>{title}</span>
+                <span className="text-sm font-semibold text-primary tracking-wide">
+                    {title}
+                </span>
             </div>
         </Link>
-    )
-}
-export default AdminPages
+    );
+};
+
+export default AdminPages;

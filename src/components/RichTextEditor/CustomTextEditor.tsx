@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+// Import your theme hook (adjust the path if necessary based on your file structure)
+import { useTheme } from '../ui/Theme/ThemeProvider';
 
 interface EditorProps {
     onEditorChange: (e: any) => void;
@@ -13,12 +15,15 @@ export default function CustomTextEditor({
     height = 400,
 }: EditorProps) {
     const editorRef: any = useRef(null);
+    const { theme } = useTheme();
 
     return (
         <>
             <Editor
                 tinymceScriptSrc="/tinymce/tinymce.min.js"
-                key={'tiny-mce-editor'}
+                // Using the theme in the key forces the iframe to re-render
+                // cleanly when toggling light/dark mode without getting stuck
+                key={`tiny-mce-editor-${theme}`}
                 licenseKey="gpl"
                 scriptLoading={{ async: false }}
                 onInit={(_evt, editor) => (editorRef.current = editor)}
@@ -28,6 +33,11 @@ export default function CustomTextEditor({
                 init={{
                     height,
                     promotion: false,
+
+                    // 1. DYNAMIC SKIN & CSS BASED ON THEME
+                    skin: theme === 'dark' ? 'oxide-dark' : 'oxide',
+                    content_css: theme === 'dark' ? 'dark' : 'default',
+
                     mobile: {
                         theme: 'silver',
                         menubar: true,
@@ -104,9 +114,7 @@ export default function CustomTextEditor({
                         },
                         format: {
                             title: 'Format',
-                            items:
-                                'bold italic underline strikethrough | forecolor backcolor | ' +
-                                'blocks fontfamily fontsize | align | removeformat',
+                            items: 'bold italic underline strikethrough | forecolor backcolor | blocks fontfamily fontsize | align | removeformat',
                         },
                         tools: { title: 'Tools', items: 'wordcount' },
                         table: {
@@ -125,7 +133,7 @@ export default function CustomTextEditor({
                                 blobInfo.blob(),
                                 blobInfo.filename()
                             );
-                            //  need to write the logic to upload image
+                            // need to write the logic to upload image
                             return '';
                         } catch (err: any) {
                             console.log(err);
@@ -133,17 +141,22 @@ export default function CustomTextEditor({
                         }
                     },
 
+                    // 2. DYNAMIC CONTENT STYLING TO MATCH BACKGROUND
                     content_style: `
-            body {
-              font-family: Helvetica, Arial, sans-serif;
-              font-size: 15px;
-              line-height: 1.6;
-            }
-            img {
-              max-width: 100%;
-              height: auto;
-            }
-          `,
+                        body {
+                            font-family: Helvetica, Arial, sans-serif;
+                            font-size: 15px;
+                            line-height: 1.6;
+                            background-color: ${
+                                theme === 'dark' ? '#09090b' : '#ffffff'
+                            };
+                            color: ${theme === 'dark' ? '#fafafa' : '#09090b'};
+                        }
+                        img {
+                            max-width: 100%;
+                            height: auto;
+                        }
+                    `,
                 }}
             />
         </>

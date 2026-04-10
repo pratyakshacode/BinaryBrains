@@ -11,8 +11,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import {
     LogInIcon,
     LogOutIcon,
+    Moon,
     Settings,
     ShieldUserIcon,
+    Sun,
     User,
 } from 'lucide-react';
 import { getRole, getToken, removeUser } from '@/redux/slices/User';
@@ -22,6 +24,8 @@ import { isInvalid } from '@/utils/utils';
 import { LOGOUT_ROUTE } from '@/utils/Urlpaths';
 import axios from 'axios';
 import Tooltip from '../Tooltip';
+import { Button } from '../ui/button';
+import { useTheme } from '../ui/Theme/ThemeProvider';
 
 export default function Navbar() {
     const location = useLocation();
@@ -30,6 +34,8 @@ export default function Navbar() {
     const role = useAppSelector(getRole);
     const token = useAppSelector(getToken);
     const [open, setOpen] = useState(false);
+
+    const { theme, toggleTheme } = useTheme();
 
     const navLinks: { title: string; url: string }[] = [
         { title: 'Home', url: '/' },
@@ -65,14 +71,18 @@ export default function Navbar() {
     return (
         <div className="flex w-full justify-center px-4 navbar-wrapper">
             <div className="mb-10"></div>
-            <nav className="navbar flex rounded-xl w-11/12 justify-between border mt-4 border-l-teal-400 border-b-teal-400 border-t-0 border-r-0 backdrop-blur-sm">
+
+            {/* FIX IS HERE: Changed background opacity and added shadow-sm */}
+            <nav className="navbar flex rounded-xl w-11/12 justify-between border mt-4 border-l-primary/60 border-b-primary/60 border-t-0 border-r-0 backdrop-blur-md bg-secondary/70 dark:bg-background/40 shadow-sm transition-colors">
                 <Link
                     to={'/'}
                     className="nav-image flex justify-end items-center"
                     style={{ height: '100%', width: '120px' }}
                 >
-                    <span className="text-teal-600 font-bold text-4xl">B</span>
-                    <span className="text-teal-200 text-lg">Brains</span>
+                    <span className="text-primary font-bold text-4xl">B</span>
+                    <span className="text-foreground text-lg transition-colors">
+                        Brains
+                    </span>
                 </Link>
 
                 <div className="nav-links w-full flex items-center justify-end">
@@ -82,10 +92,10 @@ export default function Navbar() {
                                 <Link
                                     key={item.url}
                                     to={item.url}
-                                    className={`${
+                                    className={`transition-colors ${
                                         active === item.url
-                                            ? 'underline decoration-teal-300 underline-offset-4 text-teal-500'
-                                            : 'text-teal-100 no-underline'
+                                            ? 'underline decoration-primary underline-offset-4 text-primary font-medium'
+                                            : 'text-muted-foreground hover:text-foreground no-underline'
                                     }`}
                                     onClick={() => setActive(item.url)}
                                 >
@@ -104,17 +114,17 @@ export default function Navbar() {
                                     <Avatar className="cursor-pointer">
                                         <AvatarImage
                                             src="https://github.com/shadcn.png"
-                                            className="rounded-3xl"
+                                            className="rounded-full"
                                             alt="User Avatar"
-                                            height={45}
-                                            width={45}
+                                            height={40}
+                                            width={40}
                                         />
                                         <AvatarFallback>U</AvatarFallback>
                                     </Avatar>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent
                                     align="end"
-                                    className="w-40 bg-white border border-gray-200 rounded-sm mt-3"
+                                    className="w-40 bg-popover text-popover-foreground border border-border rounded-md mt-3 shadow-md"
                                     style={{ zIndex: 1000 }}
                                 >
                                     {role === 'admin' && (
@@ -122,7 +132,7 @@ export default function Navbar() {
                                             children={
                                                 <Link to={'/admin'}>Admin</Link>
                                             }
-                                            icon={<ShieldUserIcon />}
+                                            icon={<ShieldUserIcon size={18} />}
                                             separator
                                             setOpen={setOpen}
                                             onClick={() => setActive('/admin')}
@@ -132,26 +142,26 @@ export default function Navbar() {
                                         children={
                                             <Link to={'/profile'}>Profile</Link>
                                         }
-                                        icon={<User />}
+                                        icon={<User size={18} />}
                                         setOpen={setOpen}
                                         onClick={setActiveToPath}
                                     />
                                     <MenuItem
                                         children="Settings"
-                                        icon={<Settings />}
+                                        icon={<Settings size={18} />}
                                         setOpen={setOpen}
                                     />
                                     {!isInvalid(token) && (
                                         <MenuItem
                                             children={
                                                 <button
-                                                    className="w-full flex"
+                                                    className="w-full flex text-left"
                                                     onClick={handleLogout}
                                                 >
                                                     Logout
                                                 </button>
                                             }
-                                            icon={<LogOutIcon />}
+                                            icon={<LogOutIcon size={18} />}
                                             setOpen={setOpen}
                                             onClick={setActiveToPath}
                                         />
@@ -159,11 +169,10 @@ export default function Navbar() {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (
-                            <div className="flex items-center  h-full text-gray-300">
+                            <div className="flex items-center h-full text-muted-foreground hover:text-foreground transition-colors">
                                 <Tooltip content="Login">
                                     <Link
                                         to="/login"
-                                        className="mt-3"
                                         onClick={() => setActive('')}
                                     >
                                         <LogInIcon />
@@ -172,6 +181,21 @@ export default function Navbar() {
                             </div>
                         )}
                     </div>
+
+                    {/* Theme Toggle Button */}
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={toggleTheme}
+                        className="rounded-full text-muted-foreground hover:text-foreground transition-colors ml-2 mr-2"
+                    >
+                        {theme === 'dark' ? (
+                            <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+                        ) : (
+                            <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
+                        )}
+                        <span className="sr-only">Toggle theme</span>
+                    </Button>
                 </div>
             </nav>
         </div>
@@ -194,10 +218,10 @@ export const MenuItem = ({
     return (
         <>
             <DropdownMenuItem
-                className="p-2 hover:bg-gray-600 cursor-pointer focus:outline-none focus:ring-0 bg-background text-black m-0"
+                className="p-2 cursor-pointer focus:outline-none focus:bg-accent focus:text-accent-foreground text-foreground m-0 rounded-sm transition-colors"
                 onClick={() => {
-                    setOpen((prev: boolean) => !prev);
-                    onClick();
+                    if (setOpen) setOpen((prev: boolean) => !prev);
+                    if (onClick) onClick();
                 }}
             >
                 <div className="flex gap-2 items-center">
@@ -205,7 +229,7 @@ export const MenuItem = ({
                 </div>
             </DropdownMenuItem>
             {separator ? (
-                <DropdownMenuSeparator className="h-[1px] bg-gray-700 my-1" />
+                <DropdownMenuSeparator className="h-[1px] bg-border my-1" />
             ) : null}
         </>
     );

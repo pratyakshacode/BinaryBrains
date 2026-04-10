@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTheme } from '../ui/Theme/ThemeProvider';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,7 @@ interface OfferingCardProps {
     title: string;
     background: string;
     direction: 'left' | 'right';
+    invert?: boolean;
 }
 
 const OfferingCard = ({
@@ -19,7 +21,9 @@ const OfferingCard = ({
     title,
     background,
     direction,
+    invert,
 }: OfferingCardProps) => {
+    const { theme } = useTheme();
     const cardRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
@@ -64,20 +68,26 @@ const OfferingCard = ({
             } items-center w-full gap-5 mt-10`}
         >
             <div className="offering-icon w-full flex justify-center">
-                <img src={iconSrc} className="h-[20vh] sm:h-[20vh]" />
+                <img
+                    src={iconSrc}
+                    className={
+                        'h-[20vh] sm:h-[20vh] ' +
+                        (invert && theme == 'light' ? 'invert' : '')
+                    }
+                />
             </div>
 
             <div
                 className="w-[300px] sm:w-full flex flex-col items-center justify-center rounded-2xl p-6 gap-4
                    backdrop-blur-xl bg-white/10 border border-white/20 
-                   shadow-[0_8px_32px_rgba(0,0,0,0.25)]"
+                   "
                 style={{ background }}
             >
-                <h1 className="offering-title text-2xl font-semibold text-white text-center">
+                <h1 className="offering-title text-2xl font-semibold text-foreground text-center">
                     {title}
                 </h1>
 
-                <ul className="offering-list text-white/90 text-sm space-y-2 w-11/12">
+                <ul className="offering-list text-muted-foreground text-sm space-y-2 w-11/12">
                     {descriptionList.map((description, idx) => (
                         <li key={idx} className="leading-relaxed">
                             {description}

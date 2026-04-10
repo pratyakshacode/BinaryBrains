@@ -1,32 +1,38 @@
-import { JSX, lazy } from "react"
-const MCQs = lazy(() => import("@/pages/MCQs/MCQs"));
-const Articles = lazy(() => import('@/pages/Article/CreateArticle'));
+import { JSX, lazy } from 'react';
+const MCQs = lazy(() => import('@/pages/MCQs/MCQs'));
+const Articles = lazy(() => import('@/pages/Article/AllArticles'));
 
 export enum PERMISSIONS {
-    READ   =  "read",
-    CREATE = "create",
-    UPDATE = "update",
-    DELETE = "delete"
+    READ = 'read',
+    CREATE = 'create',
+    UPDATE = 'update',
+    DELETE = 'delete',
 }
 
-export const USER_ALLOWED_ROUTES: Record<string, { route: string; permissions: string[] }> = {
-    "USERS": {
-        route: "/users",
-        permissions: ['read']
+export const USER_ALLOWED_ROUTES: Record<
+    string,
+    { route: string; permissions: string[] }
+> = {
+    USERS: {
+        route: '/users',
+        permissions: ['read'],
     },
-    "MCQS": {
-        route: "admin/mcqs",
-        permissions: ["read", "create"]
+    MCQS: {
+        route: 'admin/mcqs',
+        permissions: ['read', 'create'],
     },
-    "ARTICLES": {
+    ARTICLES: {
         route: '/admin/article',
-        permissions: ['read', 'create']
-    }
+        permissions: ['read', 'create'],
+    },
+} as const;
 
-} as const
-
-
-export const KEY_TO_PAGE_MAP: Record<string, React.LazyExoticComponent<({ permissions } : { permissions: any }) => JSX.Element>> = {
+export const KEY_TO_PAGE_MAP: Record<
+    string,
+    React.LazyExoticComponent<
+        ({ permissions }: { permissions: any }) => JSX.Element
+    >
+> = {
     MCQS: MCQs,
-    ARTICLES: Articles
-}
+    ARTICLES: Articles,
+};

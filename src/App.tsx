@@ -14,6 +14,8 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import AdminRoute from './components/AdminRoute/AdminRoute';
 import PlayGround from './pages/PlayGround/PlayGround';
 import Footer from './components/Footer/Footer';
+import ShowArticle from './pages/Article/ShowArticle';
+import AllArticles from './pages/Article/AllArticles';
 
 // always import the react pages with React.lazy
 const Admin = React.lazy(() => import('@/pages/Admin/Admin'));
@@ -78,6 +80,22 @@ function App() {
                                         );
                                 }
                             )}
+                            <Route
+                                path="/article/:articleId"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <ShowArticle />
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path="/article"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <AllArticles />
+                                    </Suspense>
+                                }
+                            />
                         </Route>
 
                         <Route path="/*" element={<NotFoundPage />} />
