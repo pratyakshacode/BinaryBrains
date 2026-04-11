@@ -1,9 +1,5 @@
-import React from 'react'
-
 const MCQs = () => {
-  return (
-    <div>THIS IS THE MCQs PAGE</div>
-  )
-}
+    return <div>THIS IS THE MCQs PAGE</div>;
+};
 
-export default MCQs
+export default MCQs;

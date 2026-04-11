@@ -1,4 +1,5 @@
-export const BASE_URL = 'http://localhost:3000/api/';
+export const BASE_URL =
+    import.meta.env.VITE_REQUEST_URL || 'http://localhost:3000/api/';
 
 /** Route for login using google */
 export const GOOGLE_LOGIN_ROUTE = BASE_URL + 'auth/google';
@@ -28,3 +29,13 @@ export const GET_ARTICLE_ROUTE = BASE_URL + `article/:articleId`;
  */
 
 export const GET_ALL_ARTICLES_ROUTE = BASE_URL + 'article';
+
+/**
+ * Route to update an existing article by its ID. The article ID should be passed as a URL parameter, and the request body should contain the updated title, description, and content of the article.
+ */
+export const UPDATE_ARTICLE_ROUTE = BASE_URL + `article/:articleId`;
+
+/**
+ * Route to delete an existing article by its ID. The article ID should be passed as a URL parameter.
+ */
+export const DELETE_ARTICLE_ROUTE = BASE_URL + `article/:articleId`;

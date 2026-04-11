@@ -4,15 +4,44 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useRequest } from '@/utils/request';
 import { showToast } from '@/utils/toast';
+import { GET_ARTICLE_ROUTE, UPDATE_ARTICLE_ROUTE } from '@/utils/Urlpaths';
 import { isInvalid } from '@/utils/utils';
-import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const CreateArticle = () => {
     const [title, setTitle] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+
+    const queryClient = useQueryClient();
+    const params = useParams();
+
+    const articleId = params.articleId;
+
+    const { get, patch } = useRequest();
+
+    const getArticle = async () => {
+        const response = await get(
+            GET_ARTICLE_ROUTE.replace(':articleId', articleId!)
+        );
+        return response.data;
+    };
+
+    const { data: article } = useQuery({
+        queryKey: ['article', articleId],
+        queryFn: getArticle,
+        enabled: !!articleId,
+    });
+
+    useEffect(() => {
+        if (article) {
+            setTitle(article.title);
+            setContent(article.content);
+            setDescription(article.description);
+        }
+    }, [article]);
 
     const navigate = useNavigate();
     const { post } = useRequest();
@@ -22,7 +51,7 @@ const CreateArticle = () => {
     };
 
     // Destructured 'isPending' to handle the button loading state
-    const { mutate, isPending } = useMutation({
+    const { mutate, isPending: isCreating } = useMutation({
         mutationKey: ['createArticle'],
         mutationFn: createArticle,
         onSuccess: data => {
@@ -48,6 +77,38 @@ const CreateArticle = () => {
         },
     });
 
+    const updateArticle = async () => {
+        return await patch(
+            UPDATE_ARTICLE_ROUTE.replace(':articleId', articleId!),
+            { title, description, content }
+        );
+    };
+
+    // Destructured 'isPending' to handle the button loading state
+    const { mutate: updateArticleMutation, isPending: isUpdating } =
+        useMutation({
+            mutationKey: ['updateArticle', articleId],
+            mutationFn: updateArticle,
+            onSuccess: () => {
+                showToast({
+                    title: 'Success',
+                    description: 'Article updated successfully!',
+                    variant: 'default',
+                });
+                queryClient.invalidateQueries({
+                    queryKey: ['article', articleId],
+                });
+            },
+            onError: error => {
+                console.error('Error updating article', error);
+                showToast({
+                    title: 'Error',
+                    description: 'Failed to update article.',
+                    variant: 'destructive',
+                });
+            },
+        });
+
     const validateAndCreate = () => {
         if (isInvalid(title) || isInvalid(content)) {
             showToast({
@@ -59,6 +120,19 @@ const CreateArticle = () => {
         }
 
         mutate();
+    };
+
+    const validateAndUpdate = () => {
+        if (isInvalid(title) || isInvalid(content)) {
+            showToast({
+                title: 'Validation Error',
+                description: 'Title and content are required fields.',
+                variant: 'destructive',
+            });
+            return;
+        }
+
+        updateArticleMutation();
     };
 
     return (
@@ -82,7 +156,7 @@ const CreateArticle = () => {
                         id="article_title"
                         placeholder="Enter the title of your article..."
                         // Removed inline styles, using Tailwind h-14 for a nice chunky input
-                        className="h-14 text-lg bg-background border-input focus-visible:ring-primary"
+                        className="h-14 text-lg bg-background border-input focus-visible:ring-primary text-foreground"
                         onChange={e => setTitle(e.target.value)}
                         value={title}
                     />
@@ -99,7 +173,7 @@ const CreateArticle = () => {
                         id="article_desc"
                         placeholder="Write a brief summary of what this article is about..."
                         // Using Tailwind for height and preventing manual resizing which breaks layouts
-                        className="h-[120px] resize-none bg-background border-input focus-visible:ring-primary"
+                        className="h-[120px] resize-none bg-background border-input focus-visible:ring-primary text-foreground"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                     />
@@ -120,12 +194,18 @@ const CreateArticle = () => {
 
                 <div className="w-full flex justify-end pt-4 border-t border-border mt-4">
                     <Button
-                        size="lg"
-                        onClick={validateAndCreate}
-                        disabled={isPending}
+                        size="sm"
+                        onClick={
+                            articleId ? validateAndUpdate : validateAndCreate
+                        }
+                        disabled={isCreating || isUpdating}
                         className="font-semibold px-8"
                     >
-                        {isPending ? 'Publishing...' : 'Publish Article'}
+                        {isCreating || isUpdating
+                            ? 'Saving...'
+                            : articleId
+                            ? 'Update Article'
+                            : 'Create Article'}
                     </Button>
                 </div>
             </div>

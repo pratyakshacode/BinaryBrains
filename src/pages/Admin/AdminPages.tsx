@@ -16,12 +16,7 @@ const AdminPages = () => {
     );
 };
 
-export const PageCard = ({
-    icon: Icon,
-    identifier, // You can omit this from destructuring if you only use it for the key, which is now handled in the map above
-    title,
-    url,
-}: AdminPagesType) => {
+export const PageCard = ({ icon: Icon, title, url }: AdminPagesType) => {
     return (
         <Link
             to={url}

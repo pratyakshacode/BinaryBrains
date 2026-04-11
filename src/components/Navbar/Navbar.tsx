@@ -187,12 +187,19 @@ export default function Navbar() {
                         variant="ghost"
                         size="icon"
                         onClick={toggleTheme}
-                        className="rounded-full text-muted-foreground hover:text-foreground transition-colors ml-2 mr-2"
+                        className="rounded-full text-muted-foreground hover:text-foreground transition-colors ml-2 mr-2 items-center translate-y-1"
                     >
                         {theme === 'dark' ? (
-                            <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+                            <Sun
+                                className="h-[1.2rem] w-[1.2rem] transition-all"
+                                color="yellow"
+                            />
                         ) : (
-                            <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
+                            <Moon
+                                className="h-[1.4rem] w-[1.4rem] transition-all"
+                                color="#43c2f4"
+                                strokeWidth={3}
+                            />
                         )}
                         <span className="sr-only">Toggle theme</span>
                     </Button>

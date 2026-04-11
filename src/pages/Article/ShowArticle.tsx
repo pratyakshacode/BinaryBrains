@@ -58,13 +58,13 @@ const ShowArticle = () => {
     return (
         <article className="max-w-6xl mx-auto px-4 py-10 lg:py-10 text-foreground bg-background transition-colors">
             {/* Header Section */}
-            <header className="mb-10 border-b border-gray-200 dark:border-zinc-800 pb-8">
-                <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
+            <header className="mb-10 border border-gray-200 dark:border-zinc-800 pb-8 bg-muted px-4 py-5 rounded-2xl">
+                <h1 className="text-3xl text-muted-foreground lg:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
                     {article.title}
                 </h1>
 
                 {article.description && (
-                    <p className="text-xl text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                    <p className="text-md text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                         {article.description}
                     </p>
                 )}
@@ -91,8 +91,6 @@ const ShowArticle = () => {
                             }
                         )}
                     </time>
-                    <span>•</span>
-                    <span>{article.estimatedReadingTime} min read</span>
                 </div>
             </header>
 

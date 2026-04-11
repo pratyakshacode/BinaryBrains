@@ -65,7 +65,7 @@ const LandingPage = () => {
     }, []);
 
     return (
-        <>
+        <div className="w-full overflow-x-hidden">
             {/* HERO SECTION */}
             <div
                 className="w-full flex justify-center m-0"
@@ -170,7 +170,7 @@ const LandingPage = () => {
             <HorizontalScrollReviews />
             <WhyChooseUs />
             <FAQ />
-        </>
+        </div>
     );
 };
 
