@@ -27,7 +27,6 @@ export default function CustomTextEditor({
                 licenseKey="gpl"
                 scriptLoading={{ async: false }}
                 onInit={(_evt, editor) => (editorRef.current = editor)}
-                initialValue="Write your content here ..."
                 value={value}
                 onEditorChange={onEditorChange}
                 init={{

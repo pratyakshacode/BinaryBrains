@@ -31,7 +31,7 @@ export const useRequest = () => {
             return (await axiosClient.put(url, data)).data;
         },
 
-        delete: async (url: string) => {
+        del: async (url: string) => {
             return (await axiosClient.delete(url)).data;
         },
 

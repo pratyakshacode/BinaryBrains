@@ -16,6 +16,8 @@ import PlayGround from './pages/PlayGround/PlayGround';
 import Footer from './components/Footer/Footer';
 import ShowArticle from './pages/Article/ShowArticle';
 import AllArticles from './pages/Article/AllArticles';
+import CreateArticle from './pages/Article/CreateArticle';
+import ConfirmModal from './components/Modal/ConfirmModal';
 
 // always import the react pages with React.lazy
 const Admin = React.lazy(() => import('@/pages/Admin/Admin'));
@@ -24,6 +26,7 @@ function App() {
     return (
         <>
             <Router>
+                <ConfirmModal />
                 <Toaster />
                 <Navbar />
                 <div className="pt-16">
@@ -93,6 +96,14 @@ function App() {
                                 element={
                                     <Suspense fallback={<Spinner />}>
                                         <AllArticles />
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path="/article/update/:articleId"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <CreateArticle />
                                     </Suspense>
                                 }
                             />

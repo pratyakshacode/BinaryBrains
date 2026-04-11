@@ -1,14 +1,17 @@
 import { Input } from '@/components/ui/input';
 import { useRequest } from '@/utils/request';
-import { GET_ALL_ARTICLES_ROUTE } from '@/utils/Urlpaths';
-import { useQuery } from '@tanstack/react-query';
+import { DELETE_ARTICLE_ROUTE, GET_ALL_ARTICLES_ROUTE } from '@/utils/Urlpaths';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, FileText } from 'lucide-react';
+import { Search, FileText, Trash2Icon, EditIcon } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 import Pagination from '@/components/Pagination/Pagination';
+import { onConfirmModal } from '@/components/Modal/onConfirmModal';
+import { showToast } from '@/utils/toast';
 
 const AllArticles = () => {
+    const queryClient = useQueryClient();
     // 1. Hook into the URL search parameters
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -25,7 +28,7 @@ const AllArticles = () => {
         Number(searchParams.get('limit')) || 10
     );
 
-    const { get } = useRequest();
+    const { get, del } = useRequest();
 
     // 3. Update the URL dynamically whenever the debounced search, page, or limit changes
     useEffect(() => {
@@ -53,6 +56,29 @@ const AllArticles = () => {
         // FIXED: Added page and limit to the queryKey so React Query knows to refetch
         queryKey: ['articles', debouncedTitle, page, limit],
         queryFn: getArticles,
+    });
+
+    const deleteArticle = async (articleId: string) => {
+        // Call the API to delete the article (you need to implement this endpoint in your backend)
+        return await del(DELETE_ARTICLE_ROUTE.replace(':articleId', articleId));
+    };
+
+    const { mutate: onDeleteArticle } = useMutation({
+        mutationKey: ['deleteArticle'],
+        mutationFn: deleteArticle,
+        onSuccess: () => {
+            showToast({
+                title: 'Article deleted',
+                description: 'The article has been deleted successfully.',
+                color: 'transparent',
+            });
+            // After deleting, refetch the articles to get the updated list
+            queryClient.invalidateQueries({ queryKey: ['articles'] });
+        },
+        onError: () => {
+            // Handle error (you can show a toast notification or something)
+            alert('Failed to delete the article. Please try again.');
+        },
     });
 
     return (
@@ -146,6 +172,30 @@ const AllArticles = () => {
                                     />
                                 </svg>
                             </Link>
+                            <div className="mt-2 flex justify-end items-center">
+                                <Link
+                                    to={`/article/update/${article.id}`}
+                                    className="inline-flex items-center text-green-500 font-semibold text-sm hover:underline transition-colors"
+                                >
+                                    <EditIcon size={18} />
+                                </Link>
+                                <Trash2Icon
+                                    className="ml-4 cursor-pointer"
+                                    color="red"
+                                    onClick={() => {
+                                        onConfirmModal({
+                                            title: 'Are you sure you want to delete this article?',
+                                            description:
+                                                'This action cannot be undone.',
+                                            confirmText: 'Delete',
+                                            variant: 'destructive',
+                                            onConfirm: () => {
+                                                onDeleteArticle(article.id);
+                                            },
+                                        });
+                                    }}
+                                />
+                            </div>
                         </div>
                     ))}
                 </div>
