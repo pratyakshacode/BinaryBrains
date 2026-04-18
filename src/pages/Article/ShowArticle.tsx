@@ -56,7 +56,9 @@ const ShowArticle = () => {
 
     // 3. Success State
     return (
-        <article className="max-w-6xl mx-auto px-4 py-10 lg:py-10 text-foreground bg-background transition-colors">
+        <article className="max-w-6xl mx-auto px-4 py-10 lg:py-10 text-foreground bg-background transition-colors relative">
+            <div className="fixed top-20 left-10 w-[500px] h-[500px] bg-primary/40 blur-[200px] rounded-full pointer-events-none"></div>
+            <div className="fixed bottom-10 right-40 w-[400px] h-[400px] bg-primary/40 blur-[200px] rounded-full pointer-events-none"></div>
             {/* Header Section */}
             <header className="mb-10 border border-gray-200 dark:border-zinc-800 pb-8 bg-muted px-4 py-5 rounded-2xl">
                 <h1 className="text-3xl text-muted-foreground lg:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 mb-4">

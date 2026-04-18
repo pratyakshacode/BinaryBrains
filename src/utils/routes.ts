@@ -1,5 +1,5 @@
 import { JSX, lazy } from 'react';
-const MCQs = lazy(() => import('@/pages/MCQs/MCQs'));
+const MCQs = lazy(() => import('@/pages/MCQs/McqListPage'));
 const Articles = lazy(() => import('@/pages/Article/AllArticles'));
 
 export enum PERMISSIONS {

@@ -3,12 +3,18 @@ import { useRequest } from '@/utils/request';
 import { DELETE_ARTICLE_ROUTE, GET_ALL_ARTICLES_ROUTE } from '@/utils/Urlpaths';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { Search, FileText, Trash2Icon, EditIcon } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Search, FileText, Trash2Icon, EditIcon, PlusIcon } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 import Pagination from '@/components/Pagination/Pagination';
 import { onConfirmModal } from '@/components/Modal/onConfirmModal';
 import { showToast } from '@/utils/toast';
+import { Button } from '@/components/ui/button';
+import Tooltip from '@/components/Tooltip';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+} from '@/components/ui/BreadCrumb/BreadCrumb';
 
 const AllArticles = () => {
     const queryClient = useQueryClient();
@@ -29,6 +35,7 @@ const AllArticles = () => {
     );
 
     const { get, del } = useRequest();
+    const navigate = useNavigate();
 
     // 3. Update the URL dynamically whenever the debounced search, page, or limit changes
     useEffect(() => {
@@ -81,15 +88,26 @@ const AllArticles = () => {
         },
     });
 
+    const items: BreadcrumbItem[] = [
+        { title: 'Home', url: '/' },
+        { title: 'Admin', url: '/admin' },
+        { title: 'Articles', url: '/admin/article' },
+    ];
+
     return (
-        <div className="flex flex-col w-full items-center max-w-7xl mx-auto min-h-screen pt-10 px-4 text-foreground bg-background transition-colors">
+        <div className="flex flex-col w-full items-center max-w-6xl mx-auto min-h-screen pt-5 text-foreground bg-background transition-colors relative">
+            <div className="fixed top-20 left-10 w-[500px] h-[500px] bg-primary/40 blur-[200px] rounded-full pointer-events-none"></div>
+            <div className="fixed bottom-10 right-10 w-[400px] h-[400px] bg-primary/40 blur-[200px] rounded-full pointer-events-none"></div>
+            <div className="flex justify-left w-full">
+                <Breadcrumb items={items} />
+            </div>
             <div className="w-full flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
                 <h1 className="text-3xl md:text-4xl font-bold text-foreground transition-colors flex items-center gap-3">
                     <FileText className="text-primary" size={36} />
                     All Articles
                 </h1>
 
-                <div className="relative w-full md:w-96">
+                <div className="relative w-full md:w-96 flex gap-5">
                     {/* Used the leftSection prop from the custom Input component we made earlier */}
                     <Input
                         placeholder="Search articles by title or description..."
@@ -107,6 +125,14 @@ const AllArticles = () => {
                             setPage(1);
                         }}
                     />
+                    <Tooltip content="Create New Article">
+                        <Button
+                            className="h-11"
+                            onClick={() => navigate('/admin/article/create')}
+                        >
+                            <PlusIcon />
+                        </Button>
+                    </Tooltip>
                 </div>
             </div>
 
@@ -174,7 +200,7 @@ const AllArticles = () => {
                             </Link>
                             <div className="mt-2 flex justify-end items-center">
                                 <Link
-                                    to={`/article/update/${article.id}`}
+                                    to={`/admin/article/${article.id}/update`}
                                     className="inline-flex items-center text-green-500 font-semibold text-sm hover:underline transition-colors"
                                 >
                                     <EditIcon size={18} />

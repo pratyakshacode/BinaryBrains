@@ -19,7 +19,7 @@ const steps = [
 
 const HowItWorks = () => {
     return (
-        <section className="w-full py-20 relative">
+        <section className="w-full relative">
             {/* Swapped text-white for text-foreground */}
             <h1 className="text-center text-3xl sm:text-4xl text-foreground font-bold mb-10 transition-colors">
                 How It Works
