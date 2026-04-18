@@ -1,4 +1,8 @@
 import CustomTextEditor from '@/components/RichTextEditor/CustomTextEditor';
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+} from '@/components/ui/BreadCrumb/BreadCrumb';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,6 +11,7 @@ import { showToast } from '@/utils/toast';
 import { GET_ARTICLE_ROUTE, UPDATE_ARTICLE_ROUTE } from '@/utils/Urlpaths';
 import { isInvalid } from '@/utils/utils';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { FileTextIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -135,11 +140,29 @@ const CreateArticle = () => {
         updateArticleMutation();
     };
 
+    const items: BreadcrumbItem[] = [
+        { title: 'Home', url: '/' },
+        { title: 'Admin', url: '/admin' },
+        { title: 'Articles', url: '/admin/article' },
+    ];
+
+    if (articleId) {
+        items.push({ title: 'Update', url: '' });
+    } else {
+        items.push({ title: 'Create', url: '' });
+    }
+
     return (
         // 1. Removed the hardcoded 'dark' class.
         // 2. Added max-w-5xl so the editor doesn't stretch endlessly on huge monitors.
-        <div className="flex flex-col w-full items-center max-w-7xl mx-auto py-10 px-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 transition-colors">
+        <div className="flex flex-col w-full max-w-6xl mx-auto py-5 relative">
+            <div className="fixed top-20 left-10 w-[500px] h-[500px] bg-primary/40 blur-[150px] rounded-full pointer-events-none"></div>
+            <div className="fixed bottom-10 right-10 w-[400px] h-[400px] bg-primary/40 blur-[150px] rounded-full pointer-events-none"></div>
+            <div className="w-full flex justify-start">
+                <Breadcrumb items={items} />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 transition-colors w-full flex items-center gap-2">
+                <FileTextIcon className="inline-block" size={36} />{' '}
                 {!isInvalid(title) ? title : 'Create New Article'}
             </h1>
 

@@ -1,8 +1,6 @@
 import './App.css';
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { KEY_TO_PAGE_MAP, USER_ALLOWED_ROUTES } from './utils/routes';
-import { isInvalid } from './utils/utils';
 import Spinner from './components/Loader/Spinner';
 import NotFoundPage from './pages/Error/NotFound';
 import Navbar from './components/Navbar/Navbar';
@@ -18,6 +16,11 @@ import ShowArticle from './pages/Article/ShowArticle';
 import AllArticles from './pages/Article/AllArticles';
 import CreateArticle from './pages/Article/CreateArticle';
 import ConfirmModal from './components/Modal/ConfirmModal';
+import McqListPage from './pages/MCQs/McqListPage';
+import CreateMcqPage from './pages/MCQs/MCQs';
+import QuizGround from './pages/PlayGround/QuizGround';
+import QuizPlayerPage from './pages/PlayGround/QuizPlayerPage';
+import CodeGround from './pages/PlayGround/CodeGround';
 
 // always import the react pages with React.lazy
 const Admin = React.lazy(() => import('@/pages/Admin/Admin'));
@@ -38,72 +41,89 @@ function App() {
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/playground" element={<PlayGround />} />
 
+                        <Route
+                            path="/playground/sandbox"
+                            element={
+                                <Suspense fallback={<Spinner />}>
+                                    <CodeGround />
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path="/playground/quiz/play/:sectionId"
+                            element={
+                                <Suspense fallback={<Spinner />}>
+                                    <QuizPlayerPage />
+                                </Suspense>
+                            }
+                        />
+
+                        <Route
+                            path="/playground/quizzes"
+                            element={
+                                <Suspense fallback={<Spinner />}>
+                                    <QuizGround />
+                                </Suspense>
+                            }
+                        />
+
                         {/* --------------------------- admin routes -----------------------------------  */}
 
                         <Route element={<AdminRoute />}>
                             <Route path="/admin" element={<Admin />} />
-                        </Route>
-
-                        {/* --------------------------- private routes ------------------------------------ */}
-
-                        <Route element={<PrivateRoute />}>
-                            {Object.keys(USER_ALLOWED_ROUTES).map(
-                                (page, index: number) => {
-                                    if (isInvalid(KEY_TO_PAGE_MAP[page]))
-                                        return (
-                                            <Route
-                                                key={index}
-                                                element={
-                                                    <Suspense
-                                                        fallback={<Spinner />}
-                                                    >
-                                                        <NotFoundPage />
-                                                    </Suspense>
-                                                }
-                                                path={`/not-found`}
-                                            />
-                                        );
-                                    else
-                                        return (
-                                            <Route
-                                                key={index}
-                                                element={
-                                                    <Suspense
-                                                        fallback={<Spinner />}
-                                                    >
-                                                        {React.createElement(
-                                                            KEY_TO_PAGE_MAP[
-                                                                page
-                                                            ]
-                                                        )}
-                                                    </Suspense>
-                                                }
-                                                path={`${USER_ALLOWED_ROUTES[page].route}`}
-                                            />
-                                        );
-                                }
-                            )}
                             <Route
-                                path="/article/:articleId"
+                                path="/admin/article/create"
                                 element={
                                     <Suspense fallback={<Spinner />}>
-                                        <ShowArticle />
+                                        <CreateArticle />
                                     </Suspense>
                                 }
                             />
+
                             <Route
-                                path="/article"
+                                path="/admin/article"
                                 element={
                                     <Suspense fallback={<Spinner />}>
                                         <AllArticles />
                                     </Suspense>
                                 }
                             />
+
                             <Route
-                                path="/article/update/:articleId"
+                                path="/admin/article/:articleId/update"
                                 element={
                                     <Suspense fallback={<Spinner />}>
                                         <CreateArticle />
+                                    </Suspense>
+                                }
+                            />
+
+                            <Route
+                                path="/admin/mcq"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <McqListPage />
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path="/admin/mcq/create"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <CreateMcqPage />
+                                    </Suspense>
+                                }
+                            />
+                        </Route>
+
+                        {/* --------------------------- private routes ------------------------------------ */}
+
+                        <Route element={<PrivateRoute />}>
+                            <Route
+                                path="/article/:articleId"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <ShowArticle />
                                     </Suspense>
                                 }
                             />
