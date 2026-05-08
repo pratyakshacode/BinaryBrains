@@ -66,6 +66,6 @@ export const adminPages: AdminPagesType[] = [
         identifier: 'course',
         icon: Dices,
         title: 'Course',
-        url: '/admin/course/create',
+        url: '/admin/course',
     },
 ];

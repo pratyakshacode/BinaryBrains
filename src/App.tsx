@@ -21,6 +21,11 @@ import CreateMcqPage from './pages/MCQs/MCQs';
 import QuizGround from './pages/PlayGround/QuizGround';
 import QuizPlayerPage from './pages/PlayGround/QuizPlayerPage';
 import CodeGround from './pages/PlayGround/CodeGround';
+import CourseLab from './components/Course/CourseLab';
+import { CourseList } from './pages/Course/CoursesList';
+import { StudentCourseCatalog } from './pages/Course/StudentCourseCatelog';
+import { CourseDetail } from './pages/Course/CourseDetail';
+import { LearnWorkspace } from './pages/Course/Learn/LearnWorkspace';
 
 // always import the react pages with React.lazy
 const Admin = React.lazy(() => import('@/pages/Admin/Admin'));
@@ -114,6 +119,30 @@ function App() {
                                     </Suspense>
                                 }
                             />
+                            <Route
+                                path="/admin/course/create"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <CourseLab />
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path="/admin/course"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <CourseList />
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path="/admin/course/:courseId/edit"
+                                element={
+                                    <Suspense fallback={<Spinner />}>
+                                        <CourseLab />
+                                    </Suspense>
+                                }
+                            />
                         </Route>
 
                         {/* --------------------------- private routes ------------------------------------ */}
@@ -128,6 +157,30 @@ function App() {
                                 }
                             />
                         </Route>
+                        <Route
+                            path="/courses"
+                            element={
+                                <Suspense fallback={<Spinner />}>
+                                    <StudentCourseCatalog />
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path="/course/:courseId"
+                            element={
+                                <Suspense fallback={<Spinner />}>
+                                    <CourseDetail />
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path="/course/:courseId/learn"
+                            element={
+                                <Suspense fallback={<Spinner />}>
+                                    <LearnWorkspace />
+                                </Suspense>
+                            }
+                        />
 
                         <Route path="/*" element={<NotFoundPage />} />
                     </Routes>
