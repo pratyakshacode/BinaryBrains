@@ -41,7 +41,7 @@ export default function Navbar() {
         { title: 'Home', url: '/' },
         { title: 'Courses', url: '/courses' },
         { title: 'PlayGround', url: '/playground' },
-        { title: 'Contact Us', url: '/contact-us' },
+        { title: 'Contact Us', url: '/contact' },
     ];
 
     const setActiveToPath = () => {

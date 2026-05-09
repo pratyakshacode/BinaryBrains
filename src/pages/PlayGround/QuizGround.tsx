@@ -40,6 +40,7 @@ interface PublicSection {
 
 const items: BreadcrumbItem[] = [
     { title: 'Home', url: '/' },
+    { title: 'PlayGround', url: '/playground' },
     { title: 'QuizGround', url: '/quizground' },
 ];
 

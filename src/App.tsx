@@ -26,6 +26,7 @@ import { CourseList } from './pages/Course/CoursesList';
 import { StudentCourseCatalog } from './pages/Course/StudentCourseCatelog';
 import { CourseDetail } from './pages/Course/CourseDetail';
 import { LearnWorkspace } from './pages/Course/Learn/LearnWorkspace';
+import { ContactUs } from './pages/ContactUs/ContactUs';
 
 // always import the react pages with React.lazy
 const Admin = React.lazy(() => import('@/pages/Admin/Admin'));
@@ -45,6 +46,7 @@ function App() {
                         <Route path="/signup" element={<SignUp />} />
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/playground" element={<PlayGround />} />
+                        <Route path="/contact" element={<ContactUs />} />
 
                         <Route
                             path="/playground/sandbox"
