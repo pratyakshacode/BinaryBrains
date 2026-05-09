@@ -328,10 +328,7 @@ export const CourseDetail = () => {
                                                             .length > 0 && (
                                                             <div className="border-t border-white/5 bg-black/5 dark:bg-black/20 backdrop-blur-2xl">
                                                                 {chapter.sections.map(
-                                                                    (
-                                                                        section,
-                                                                        sIdx
-                                                                    ) => (
+                                                                    section => (
                                                                         <div
                                                                             key={
                                                                                 section.id

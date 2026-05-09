@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ADMIN_MENU_TO_PAGES_MAP } from './adminUtils';
 import { isInvalid } from '@/utils/utils';
 import NotFoundPage from '../Error/NotFound';
-import { ShieldIcon, UserRoundCog } from 'lucide-react';
+import { UserRoundCog } from 'lucide-react';
 import {
     Breadcrumb,
     BreadcrumbItem,

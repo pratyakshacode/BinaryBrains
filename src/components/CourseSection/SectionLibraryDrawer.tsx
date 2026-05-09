@@ -33,7 +33,6 @@ export const SectionLibraryDrawer = ({
     isOpen,
     onClose,
     onSelect,
-    chapterId,
 }: SectionLibraryDrawerProps) => {
     const request = useRequest();
 

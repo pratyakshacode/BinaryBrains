@@ -142,7 +142,6 @@ export const SectionEditorModal = ({
     const [availableResources, setAvailableResources] = useState<Resource[]>(
         []
     );
-    const [activeDragId, setActiveDragId] = useState<string | null>(null);
 
     // Search & Filter State for Right Column
     const [searchQuery, setSearchQuery] = useState('');
@@ -257,7 +256,7 @@ export const SectionEditorModal = ({
     );
 
     const handleDragStart = (event: DragStartEvent) => {
-        setActiveDragId(event.active.id as string);
+        console.log('Drag Started:', event);
     };
 
     const handleDragOver = (event: DragOverEvent) => {
@@ -304,7 +303,6 @@ export const SectionEditorModal = ({
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
-        setActiveDragId(null);
         if (!over) return;
 
         const activeContainer = linkedResources.find(x => x.id === active.id)

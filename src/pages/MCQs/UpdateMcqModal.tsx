@@ -270,7 +270,7 @@ export const UpdateMcqModal = ({
                                 </option>
                             </select>
                         </div>
-                        {options.map((opt, i) => (
+                        {options.map(opt => (
                             <div
                                 key={opt.id}
                                 className="flex gap-2 items-center"
